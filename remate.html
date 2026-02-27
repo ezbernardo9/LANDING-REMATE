@@ -421,7 +421,7 @@
     /* ─── CONTACTO ─── */
     .contacto { background: var(--verde); text-align: center; }
     .contacto-intro { max-width: 560px; margin: 0 auto; }
-    .contacto-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 56px; }
+    .contacto-cards { display: flex; justify-content: center; margin-top: 56px; }
     .ccard {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15);
       padding: 38px 28px; text-decoration: none; transition: all 0.35s var(--ease-out);
@@ -464,7 +464,7 @@
  
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
-      .contacto-cards { grid-template-columns: repeat(2, 1fr); }
+      .contacto-cards { flex-direction: column; align-items: center; }
     }
     @media (max-width: 900px) {
       .evento-grid, .org-top, .lugar-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -480,7 +480,7 @@
     @media (max-width: 640px) {
       section { padding: 72px 20px; }
       .hero-body { padding: 100px 20px 40px; }
-      .contacto-cards { grid-template-columns: 1fr; max-width: 340px; margin: 56px auto 0; }
+      .contacto-cards { max-width: 340px; margin: 56px auto 0; }
       .cdunit { min-width: 64px; }
       .cdunit-num { font-size: 28px; }
       .wa-float { bottom: 20px; right: 20px; width: 52px; height: 52px; }
@@ -835,29 +835,11 @@
       <p class="s-body light reveal" style="margin: 0 auto;">Ya sea para comprar reproductores, consignar hacienda o recibir el catálogo completo — estamos disponibles para atenderte.</p>
     </div>
     <div class="contacto-cards">
-      <a href="https://wa.me/54911XXXXXXXX?text=Hola!%20Vi%20el%20remate%20de%20Madelan%20Chacabuco%20y%20quiero%20informaci%C3%B3n" class="ccard reveal" target="_blank">
-        <span class="ccard-ico">💬</span>
-        <div class="ccard-label">WhatsApp</div>
-        <div class="ccard-val">Escribinos ahora</div>
-        <div class="ccard-sub">Respuesta inmediata</div>
-      </a>
       <a href="https://instagram.com/madelanchacabuco" class="ccard reveal" target="_blank">
         <span class="ccard-ico">📸</span>
         <div class="ccard-label">Instagram</div>
         <div class="ccard-val">@madelanchacabuco</div>
         <div class="ccard-sub">Novedades y contenido</div>
-      </a>
-      <a href="https://instagram.com/madelanserviciosrurales" class="ccard reveal" target="_blank">
-        <span class="ccard-ico">🏢</span>
-        <div class="ccard-label">Madelan SA</div>
-        <div class="ccard-val">@madelanserviciosrurales</div>
-        <div class="ccard-sub">www.madelan.com.ar</div>
-      </a>
-      <a href="https://instagram.com/ruralchacabuco" class="ccard reveal" target="_blank">
-        <span class="ccard-ico">🌾</span>
-        <div class="ccard-label">Sociedad Rural</div>
-        <div class="ccard-val">@ruralchacabuco</div>
-        <div class="ccard-sub">02352-470919</div>
       </a>
     </div>
     <p class="contacto-note reveal">Primer remate de reproductores en Chacabuco después de 20 años. <br>Una oportunidad única para mejorar la genética de tu rodeo.</p>
