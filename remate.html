@@ -470,6 +470,23 @@
     .reveal-scale { opacity: 0; transform: scale(0.95); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
     .reveal-scale.on { opacity: 1; transform: scale(1); }
  
+    /* ─── EVENTO SLIDESHOW ─── */
+    .evento-img-frame .slide {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 1.2s ease-in-out;
+    }
+    .evento-img-frame .slide.active { opacity: 1; }
+    .slide-dots {
+      position: absolute; bottom: 84px; right: 18px; z-index: 4;
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .sdot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.28); transition: background 0.35s, transform 0.35s;
+    }
+    .sdot.active { background: var(--dorado); transform: scale(1.4); }
+
     /* ─── ROUNDED DESIGN ─── */
     .btn-primary, .btn-ghost, .nav-cta { border-radius: 999px; }
     .pill { border-radius: 999px; }
@@ -592,7 +609,6 @@
       <li><a href="#lotes">Catálogo</a></li>
       <li><a href="#lugar">Lugar</a></li>
     </ul>
-    <a href="https://wa.me/9542352501068?text=Quiero%20m%C3%A1s%20informaci%C3%B3n" class="nav-cta" target="_blank">Consultar →</a>
     <button class="nav-ham" id="navHam" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -644,19 +660,22 @@
         <h2 class="s-title reveal">Después de 20 años,<br>Chacabuco<br>vuelve a rematar.</h2>
         <div class="gold-rule reveal"></div>
         <p class="s-body reveal">Madelan Servicios Rurales —líderes nacionales en consignación y remates ganaderos online— llegan a Chacabuco junto a Cabaña Lago Negro, productora de genética Aberdeen Angus de primer nivel en Rawson, para protagonizar un evento histórico: el primer remate de reproductores en dos décadas en la Sociedad Rural de Chacabuco.</p>
-        <div class="evento-facts reveal">
-          <div class="efact"><div class="efact-num">20</div><div class="efact-label">Años sin remate</div></div>
-          <div class="efact"><div class="efact-num">100%</div><div class="efact-label">Aberdeen Angus</div></div>
-          <div class="efact"><div class="efact-num">+50</div><div class="efact-label">Reproductores</div></div>
-          <div class="efact"><div class="efact-num">AGO</div><div class="efact-label">2026 · Chacabuco</div></div>
-        </div>
       </div>
       <div class="reveal-right">
         <div class="evento-img-frame">
-          <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=80" alt="Toro Aberdeen Angus reproductor">
+          <img class="slide active" src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=80" alt="Toro Aberdeen Angus reproductor">
+          <img class="slide" src="https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=900&q=80" alt="Vaquillonas Aberdeen Angus">
+          <img class="slide" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80" alt="Campo y hacienda pampeana">
+          <img class="slide" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=900&q=80" alt="Hacienda en corral">
           <div class="evento-img-caption">
             <div class="evento-img-caption-title">Genética que transforma rodeos</div>
             <div class="evento-img-caption-sub">Aberdeen Angus · Cabaña Lago Negro · Rawson, Bs. As.</div>
+          </div>
+          <div class="slide-dots">
+            <span class="sdot active"></span>
+            <span class="sdot"></span>
+            <span class="sdot"></span>
+            <span class="sdot"></span>
           </div>
         </div>
       </div>
@@ -964,6 +983,21 @@
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  // ─── Evento slideshow ───
+  (function () {
+    const slides = document.querySelectorAll('.evento-img-frame .slide');
+    const sdots  = document.querySelectorAll('.sdot');
+    if (!slides.length) return;
+    let idx = 0;
+    setInterval(() => {
+      slides[idx].classList.remove('active');
+      sdots[idx].classList.remove('active');
+      idx = (idx + 1) % slides.length;
+      slides[idx].classList.add('active');
+      sdots[idx].classList.add('active');
+    }, 4000);
+  })();
 
   // ─── Carousel ───
   (function () {
