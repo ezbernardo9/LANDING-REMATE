@@ -965,72 +965,9 @@
   })();
 
   // ════════════════════════════════════════════════════════════════════════════
-  // CATÁLOGO DE LOTES
-  // ─ Para agregar un lote: copiá un objeto del array, editá sus propiedades y
-  //   agregá las URLs de fotos reales en el array "photos".
-  // ─ Para agregar fotos a un lote: sumá URLs al array "photos" de ese lote.
+  // CATÁLOGO DE LOTES — cargado dinámicamente desde /api/lots
+  // Para agregar o editar lotes usá el panel admin en /admin.html
   // ════════════════════════════════════════════════════════════════════════════
-  const LOTS = [
-    {
-      badge: 'Lote 1',
-      cat: 'Toros · Cabaña Lago Negro',
-      title: 'Toros Aberdeen Angus PO',
-      specs: [
-        ['Raza',      'Aberdeen Angus PO'],
-        ['Categoría', 'Toros jóvenes'],
-        ['Origen',    'Cabaña Lago Negro · Rawson'],
-        ['Sanidad',   'Completa · SENASA'],
-      ],
-      notice: '📸 Fotos individuales disponibles en julio 2026',
-      btnText: 'Consultar este lote →',
-      photos: [
-        'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85',
-        'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=900&q=85',
-        'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85',
-      ],
-    },
-    {
-      badge: 'Lote 2',
-      cat: 'Vaquillonas · Cabaña Lago Negro',
-      title: 'Vaquillonas Aberdeen Angus PC',
-      specs: [
-        ['Raza',      'Aberdeen Angus PC'],
-        ['Categoría', 'Vaquillonas entraderas'],
-        ['Origen',    'Cabaña Lago Negro · Rawson'],
-        ['Sanidad',   'Brucelosis · Completa'],
-      ],
-      notice: '📸 Fotos individuales disponibles en julio 2026',
-      btnText: 'Consultar este lote →',
-      photos: [
-        'https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=900&q=85',
-        'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=900&q=85',
-        'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85&fit=crop&crop=right',
-      ],
-    },
-    {
-      badge: 'Lote 3+',
-      cat: 'Próximamente · Julio 2026',
-      title: 'Más categorías por confirmar',
-      specs: [
-        ['Total estimado',   '50 a 100 cabezas'],
-        ['Razas',            'Aberdeen Angus PO y PC'],
-        ['Catálogo completo','Julio 2026'],
-      ],
-      notice: '🔔 Más animales se agregan en julio',
-      btnText: 'Consultar →',
-      pending: true,
-    },
-    // ── Agregar lotes aquí ──────────────────────────────────────────────────
-    // {
-    //   badge: 'Lote 4',
-    //   cat: 'Categoría · Cabaña',
-    //   title: 'Nombre del lote',
-    //   specs: [['Clave','Valor']],
-    //   notice: '📸 Fotos disponibles en julio',
-    //   btnText: 'Consultar este lote →',
-    //   photos: ['URL_FOTO_1', 'URL_FOTO_2'],
-    // },
-  ];
 
   // ─── Inicializar galería interna de cada lote ───
   function initLotGallery(slide) {
@@ -1060,15 +997,15 @@
     }, { passive: true });
   }
 
-  // ─── Construir carrusel desde LOTS ───
-  function buildCarousel() {
+  // ─── Construir carrusel desde datos ───
+  function buildCarousel(lots) {
     const track = document.getElementById('carouselTrack');
     const dotsC = document.getElementById('carouselDots');
     if (!track || !dotsC) return;
     track.innerHTML = '';
     dotsC.innerHTML = '';
 
-    LOTS.forEach((lot, idx) => {
+    lots.forEach((lot, idx) => {
       let mediaHTML;
       if (lot.pending) {
         mediaHTML = `
@@ -1147,7 +1084,18 @@
     }, { passive: true });
   }
 
-  buildCarousel();
+  // ─── Cargar lotes desde API y armar carrusel ───
+  (async () => {
+    try {
+      const res  = await fetch('/api/lots');
+      const lots = await res.json();
+      buildCarousel(lots);
+    } catch {
+      // Fallback: si el servidor no está disponible, mostrar mensaje
+      const track = document.getElementById('carouselTrack');
+      if (track) track.innerHTML = '<div style="padding:3rem;text-align:center;color:#7b5c3b;">Cargando catálogo…</div>';
+    }
+  })();
 </script>
 </body>
 </html>

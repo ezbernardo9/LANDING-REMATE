@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "badge": "Lote 1",
+    "cat": "Toros · Cabaña Lago Negro",
+    "title": "Toros Aberdeen Angus PO",
+    "specs": [
+      ["Raza", "Aberdeen Angus PO"],
+      ["Categoría", "Toros jóvenes"],
+      ["Origen", "Cabaña Lago Negro · Rawson"],
+      ["Sanidad", "Completa · SENASA"]
+    ],
+    "notice": "📸 Fotos individuales disponibles en julio 2026",
+    "btnText": "Consultar este lote →",
+    "photos": [
+      "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85",
+      "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=900&q=85",
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85"
+    ],
+    "pending": false
+  },
+  {
+    "id": "2",
+    "badge": "Lote 2",
+    "cat": "Vaquillonas · Cabaña Lago Negro",
+    "title": "Vaquillonas Aberdeen Angus PC",
+    "specs": [
+      ["Raza", "Aberdeen Angus PC"],
+      ["Categoría", "Vaquillonas entraderas"],
+      ["Origen", "Cabaña Lago Negro · Rawson"],
+      ["Sanidad", "Brucelosis · Completa"]
+    ],
+    "notice": "📸 Fotos individuales disponibles en julio 2026",
+    "btnText": "Consultar este lote →",
+    "photos": [
+      "https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=900&q=85",
+      "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=900&q=85",
+      "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85&fit=crop&crop=right"
+    ],
+    "pending": false
+  },
+  {
+    "id": "3",
+    "badge": "Lote 3+",
+    "cat": "Próximamente · Julio 2026",
+    "title": "Más categorías por confirmar",
+    "specs": [
+      ["Total estimado", "50 a 100 cabezas"],
+      ["Razas", "Aberdeen Angus PO y PC"],
+      ["Catálogo completo", "Julio 2026"]
+    ],
+    "notice": "🔔 Más animales se agregan en julio",
+    "btnText": "Consultar →",
+    "photos": [],
+    "pending": true
+  }
+]

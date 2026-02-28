@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Remate Madelan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:  #064622;
+    --dorado: #c9a84c;
+    --crema:  #f5f1ea;
+    --tierra: #7b5c3b;
+    --blanco: #fdfaf3;
+    --texto:  #1a1a16;
+    --rojo:   #c0392b;
+    --radius: 12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--verde);
+  }
+  .login-box {
+    background: var(--blanco);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    width: min(380px, 92vw);
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  }
+  .login-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--verde);
+    text-align: center;
+    margin-bottom: .4rem;
+  }
+  .login-sub {
+    font-size: .8rem;
+    color: var(--tierra);
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .login-box label { display: block; font-size: .8rem; font-weight: 600; margin-bottom: .4rem; color: var(--tierra); }
+  .login-box input {
+    width: 100%; padding: .75rem 1rem;
+    border: 1.5px solid #ddd; border-radius: 8px;
+    font-size: .95rem; font-family: inherit;
+    margin-bottom: 1rem; transition: border-color .2s;
+  }
+  .login-box input:focus { outline: none; border-color: var(--verde); }
+  #login-error { color: var(--rojo); font-size: .82rem; margin-bottom: .8rem; min-height: 1.2rem; }
+  .btn-primary {
+    background: var(--verde); color: #fff;
+    border: none; border-radius: 8px;
+    padding: .8rem 1.5rem; font-size: .95rem;
+    font-weight: 700; font-family: inherit;
+    cursor: pointer; width: 100%;
+    transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ── HEADER ── */
+  #app { display: none; }
+  header {
+    background: var(--verde);
+    color: #fff;
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.2);
+  }
+  .header-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .header-user { font-size: .8rem; opacity: .75; }
+  .btn-logout {
+    background: rgba(255,255,255,.15);
+    color: #fff; border: none; border-radius: 6px;
+    padding: .4rem .9rem; font-size: .8rem;
+    font-family: inherit; cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-logout:hover { background: rgba(255,255,255,.25); }
+
+  /* ── LAYOUT ── */
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .toolbar h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--verde); }
+  .btn-add {
+    background: var(--dorado); color: var(--verde);
+    border: none; border-radius: 8px;
+    padding: .7rem 1.4rem; font-size: .9rem;
+    font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-add:hover { opacity: .85; }
+
+  /* ── LOT CARDS ── */
+  #lots-list { display: flex; flex-direction: column; gap: 1rem; }
+  .lot-card {
+    background: var(--blanco);
+    border-radius: var(--radius);
+    border: 1.5px solid #e8e0d5;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .lot-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+  .lot-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .lot-card-left { display: flex; align-items: center; gap: .8rem; }
+  .lot-badge-tag {
+    background: var(--verde); color: #fff;
+    font-size: .7rem; font-weight: 700;
+    padding: .2rem .6rem; border-radius: 20px;
+    letter-spacing: .05em;
+  }
+  .lot-badge-tag.pending { background: var(--tierra); }
+  .lot-card-title { font-weight: 700; font-size: .95rem; }
+  .lot-card-cat { font-size: .78rem; color: var(--tierra); }
+  .lot-card-actions { display: flex; gap: .5rem; }
+  .btn-icon {
+    background: none; border: 1.5px solid #ddd;
+    border-radius: 6px; padding: .35rem .6rem;
+    font-size: .85rem; cursor: pointer;
+    transition: all .2s; font-family: inherit;
+  }
+  .btn-icon:hover { border-color: var(--verde); color: var(--verde); }
+  .btn-icon.danger:hover { border-color: var(--rojo); color: var(--rojo); }
+  .btn-icon.move { cursor: grab; }
+  .lot-card-body { display: none; padding: 0 1.2rem 1.2rem; border-top: 1.5px solid #f0e8dc; }
+  .lot-card-body.open { display: block; }
+
+  /* ── FOTOS ── */
+  .photos-section { margin-bottom: 1.2rem; }
+  .photos-section h3 { font-size: .85rem; font-weight: 700; color: var(--tierra); margin-bottom: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+  .photos-grid {
+    display: flex; flex-wrap: wrap; gap: .6rem;
+    margin-bottom: .8rem;
+  }
+  .photo-thumb {
+    position: relative; width: 90px; height: 75px;
+    border-radius: 8px; overflow: hidden;
+    border: 1.5px solid #e0d8cc;
+  }
+  .photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-thumb .remove-photo {
+    position: absolute; top: 3px; right: 3px;
+    background: rgba(0,0,0,.65); color: #fff;
+    border: none; border-radius: 50%;
+    width: 20px; height: 20px; font-size: 12px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .photo-thumb .remove-photo:hover { background: var(--rojo); }
+  .upload-area {
+    border: 2px dashed #c8bfb5;
+    border-radius: 8px; padding: 1rem;
+    text-align: center; cursor: pointer;
+    transition: border-color .2s; font-size: .85rem; color: var(--tierra);
+  }
+  .upload-area:hover { border-color: var(--verde); color: var(--verde); }
+  .upload-area input { display: none; }
+
+  /* ── FORM FIELDS ── */
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: .8rem; margin-bottom: 1rem;
+  }
+  @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: .3rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: .78rem; font-weight: 600; color: var(--tierra); text-transform: uppercase; letter-spacing: .04em; }
+  .form-group input, .form-group textarea, .form-group select {
+    padding: .6rem .8rem;
+    border: 1.5px solid #ddd; border-radius: 8px;
+    font-size: .9rem; font-family: inherit;
+    transition: border-color .2s; background: #fff;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { outline: none; border-color: var(--verde); }
+  .form-group textarea { resize: vertical; min-height: 60px; }
+
+  /* ── SPECS ── */
+  .specs-section { margin-bottom: 1rem; }
+  .specs-section h3 { font-size: .85rem; font-weight: 700; color: var(--tierra); margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .05em; }
+  .spec-row { display: flex; gap: .5rem; margin-bottom: .5rem; align-items: center; }
+  .spec-row input { flex: 1; padding: .5rem .7rem; border: 1.5px solid #ddd; border-radius: 6px; font-size: .85rem; font-family: inherit; }
+  .spec-row input:focus { outline: none; border-color: var(--verde); }
+  .btn-remove-spec {
+    background: none; border: 1.5px solid #ddd;
+    border-radius: 6px; padding: .35rem .5rem;
+    cursor: pointer; color: #999; font-size: .85rem;
+    transition: all .2s; flex-shrink: 0;
+  }
+  .btn-remove-spec:hover { border-color: var(--rojo); color: var(--rojo); }
+  .btn-add-spec {
+    background: none; border: 1.5px dashed #c8bfb5;
+    border-radius: 6px; padding: .4rem .9rem;
+    font-size: .82rem; cursor: pointer; color: var(--tierra);
+    font-family: inherit; transition: all .2s;
+  }
+  .btn-add-spec:hover { border-color: var(--verde); color: var(--verde); }
+
+  /* ── PENDING TOGGLE ── */
+  .pending-toggle { display: flex; align-items: center; gap: .6rem; font-size: .85rem; }
+  .pending-toggle input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--verde); }
+
+  /* ── SAVE ROW ── */
+  .save-row { display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1rem; }
+  .btn-save {
+    background: var(--verde); color: #fff;
+    border: none; border-radius: 8px;
+    padding: .6rem 1.4rem; font-size: .88rem;
+    font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-save:hover { opacity: .85; }
+  .btn-save:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--tierra); font-size: .9rem;
+  }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--verde); color: #fff;
+    padding: .8rem 1.4rem; border-radius: 10px;
+    font-size: .88rem; font-weight: 600;
+    box-shadow: 0 6px 24px rgba(0,0,0,.2);
+    transform: translateY(100px); opacity: 0;
+    transition: all .3s cubic-bezier(.22,1,.36,1);
+    z-index: 9999;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+  #toast.error { background: var(--rojo); }
+
+  /* ── SPINNER ── */
+  .spinner {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SEPARADOR ── */
+  .section-sep { height: 1px; background: #e8e0d5; margin: 1rem 0; }
+
+  /* ── NO FOTO ── */
+  .no-photos { font-size: .82rem; color: #aaa; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Madelan Admin</div>
+    <div class="login-sub">Panel de gestión · Remate 2026</div>
+    <label for="inp-user">Usuario</label>
+    <input type="text" id="inp-user" placeholder="admin" autocomplete="username">
+    <label for="inp-pass">Contraseña</label>
+    <input type="password" id="inp-pass" placeholder="••••••••" autocomplete="current-password">
+    <div id="login-error"></div>
+    <button class="btn-primary" id="btn-login">Ingresar</button>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="app">
+  <header>
+    <div class="header-brand">Madelan · Admin</div>
+    <div class="header-right">
+      <span class="header-user" id="header-user"></span>
+      <button class="btn-logout" id="btn-logout">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <h1>Lotes del Catálogo</h1>
+      <button class="btn-add" id="btn-new-lot">+ Nuevo lote</button>
+    </div>
+    <div id="lots-list">
+      <div class="empty">Cargando lotes…</div>
+    </div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Estado global ─────────────────────────────────────────────────────────────
+let token = localStorage.getItem('admin_token') || '';
+let lots  = [];
+
+// ── API helper ────────────────────────────────────────────────────────────────
+async function api(method, path, body, isFormData = false) {
+  const opts = {
+    method,
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  if (body && !isFormData) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  } else if (body && isFormData) {
+    opts.body = body;
+  }
+  const res = await fetch(path, opts);
+  if (res.status === 401) { logout(); return; }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Error desconocido');
+  return data;
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function toast(msg, isError = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (isError ? ' error' : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.className = ''; }, 3000);
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function logout() {
+  token = '';
+  localStorage.removeItem('admin_token');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+document.getElementById('btn-logout').addEventListener('click', logout);
+
+document.getElementById('btn-login').addEventListener('click', async () => {
+  const btn  = document.getElementById('btn-login');
+  const user = document.getElementById('inp-user').value.trim();
+  const pass = document.getElementById('inp-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+
+  if (!user || !pass) { errEl.textContent = 'Completá usuario y contraseña.'; return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user, password: pass }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error');
+    token = data.token;
+    localStorage.setItem('admin_token', token);
+    enterApp(data.username);
+  } catch (e) {
+    errEl.textContent = e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Ingresar';
+  }
+});
+
+// Enter con Enter key
+document.getElementById('inp-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('btn-login').click();
+});
+
+// ── Entrar a la app ───────────────────────────────────────────────────────────
+async function enterApp(username) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('header-user').textContent = username || '';
+  await loadLots();
+}
+
+// ── Cargar lotes ──────────────────────────────────────────────────────────────
+async function loadLots() {
+  try {
+    lots = await api('GET', '/api/lots');
+    renderLots();
+  } catch (e) {
+    toast('Error cargando lotes', true);
+  }
+}
+
+// ── Renderizar lista ──────────────────────────────────────────────────────────
+function renderLots() {
+  const container = document.getElementById('lots-list');
+  if (!lots.length) {
+    container.innerHTML = '<div class="empty">No hay lotes todavía. ¡Creá el primero!</div>';
+    return;
+  }
+  container.innerHTML = '';
+  lots.forEach(lot => container.appendChild(buildLotCard(lot)));
+}
+
+// ── Construir card de lote ────────────────────────────────────────────────────
+function buildLotCard(lot) {
+  const card = document.createElement('div');
+  card.className = 'lot-card';
+  card.dataset.id = lot.id;
+
+  // HEADER
+  const header = document.createElement('div');
+  header.className = 'lot-card-header';
+  header.innerHTML = `
+    <div class="lot-card-left">
+      <span class="lot-badge-tag ${lot.pending ? 'pending' : ''}">${lot.badge}</span>
+      <div>
+        <div class="lot-card-title">${lot.title}</div>
+        <div class="lot-card-cat">${lot.cat}</div>
+      </div>
+    </div>
+    <div class="lot-card-actions">
+      <button class="btn-icon danger" title="Eliminar lote" data-action="delete">✕</button>
+      <button class="btn-icon" title="Expandir/colapsar" data-action="toggle">▾</button>
+    </div>`;
+
+  // BODY
+  const body = document.createElement('div');
+  body.className = 'lot-card-body';
+  body.innerHTML = buildLotBodyHTML(lot);
+
+  // Toggle
+  header.querySelector('[data-action=toggle]').addEventListener('click', () => {
+    body.classList.toggle('open');
+    header.querySelector('[data-action=toggle]').textContent = body.classList.contains('open') ? '▴' : '▾';
+  });
+  header.querySelector('[data-action=delete]').addEventListener('click', () => confirmDeleteLot(lot.id, lot.badge));
+
+  card.appendChild(header);
+  card.appendChild(body);
+
+  // Eventos dentro del body
+  wireBodyEvents(body, lot);
+
+  return card;
+}
+
+function buildLotBodyHTML(lot) {
+  const photosHTML = lot.photos && lot.photos.length
+    ? lot.photos.map((url, i) => `
+        <div class="photo-thumb">
+          <img src="${url}" alt="Foto ${i+1}">
+          <button class="remove-photo" data-idx="${i}" title="Eliminar foto">×</button>
+        </div>`).join('')
+    : '<span class="no-photos">Sin fotos aún</span>';
+
+  const specsHTML = (lot.specs || []).map((s, i) => `
+    <div class="spec-row" data-spec="${i}">
+      <input type="text" class="spec-k" value="${esc(s[0])}" placeholder="Clave (ej: Raza)">
+      <input type="text" class="spec-v" value="${esc(s[1])}" placeholder="Valor (ej: Aberdeen Angus)">
+      <button class="btn-remove-spec" title="Quitar fila">✕</button>
+    </div>`).join('');
+
+  return `
+    <!-- FOTOS -->
+    <div class="photos-section" style="margin-top:1rem;">
+      <h3>Fotos</h3>
+      <div class="photos-grid">${photosHTML}</div>
+      <label class="upload-area">
+        <input type="file" class="photo-upload-input" accept="image/*" multiple>
+        ＋ Subir fotos (JPG, PNG, WEBP — máx. 15 MB c/u)
+      </label>
+    </div>
+
+    <div class="section-sep"></div>
+
+    <!-- DATOS -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Badge</label>
+        <input type="text" class="field" data-field="badge" value="${esc(lot.badge)}">
+      </div>
+      <div class="form-group">
+        <label>Categoría (subtítulo)</label>
+        <input type="text" class="field" data-field="cat" value="${esc(lot.cat)}">
+      </div>
+      <div class="form-group full">
+        <label>Título del lote</label>
+        <input type="text" class="field" data-field="title" value="${esc(lot.title)}">
+      </div>
+      <div class="form-group full">
+        <label>Aviso / notice</label>
+        <input type="text" class="field" data-field="notice" value="${esc(lot.notice)}">
+      </div>
+      <div class="form-group">
+        <label>Texto del botón</label>
+        <input type="text" class="field" data-field="btnText" value="${esc(lot.btnText)}">
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <label>Estado</label>
+        <div class="pending-toggle">
+          <input type="checkbox" class="field" data-field="pending" ${lot.pending ? 'checked' : ''} id="pend-${lot.id}">
+          <label for="pend-${lot.id}" style="font-size:.85rem;color:var(--tierra);text-transform:none;letter-spacing:0;">Marcar como "próximamente"</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-sep"></div>
+
+    <!-- SPECS -->
+    <div class="specs-section">
+      <h3>Especificaciones</h3>
+      <div class="specs-rows">${specsHTML}</div>
+      <button class="btn-add-spec">+ Agregar fila</button>
+    </div>
+
+    <div class="save-row">
+      <button class="btn-save">Guardar cambios</button>
+    </div>`;
+}
+
+function esc(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Conectar eventos dentro de la card ───────────────────────────────────────
+function wireBodyEvents(body, lot) {
+  // Eliminar foto
+  body.addEventListener('click', async e => {
+    if (!e.target.classList.contains('remove-photo')) return;
+    const idx = parseInt(e.target.dataset.idx, 10);
+    if (!confirm(`¿Eliminar foto ${idx + 1}?`)) return;
+    try {
+      await api('DELETE', `/api/lots/${lot.id}/photos/${idx}`);
+      lot.photos.splice(idx, 1);
+      refreshPhotosGrid(body, lot);
+      toast('Foto eliminada');
+    } catch(err) { toast(err.message, true); }
+  });
+
+  // Subir fotos
+  body.querySelector('.photo-upload-input').addEventListener('change', async e => {
+    const files = [...e.target.files];
+    for (const file of files) {
+      const fd = new FormData();
+      fd.append('photo', file);
+      try {
+        const res = await api('POST', `/api/lots/${lot.id}/photos`, fd, true);
+        lot.photos = res.photos;
+        refreshPhotosGrid(body, lot);
+        toast('Foto subida correctamente');
+      } catch(err) { toast(err.message, true); }
+    }
+    e.target.value = '';
+  });
+
+  // Agregar spec row
+  body.querySelector('.btn-add-spec').addEventListener('click', () => {
+    const row = document.createElement('div');
+    row.className = 'spec-row';
+    row.dataset.spec = 'new';
+    row.innerHTML = `
+      <input type="text" class="spec-k" placeholder="Clave (ej: Raza)">
+      <input type="text" class="spec-v" placeholder="Valor (ej: Aberdeen Angus)">
+      <button class="btn-remove-spec" title="Quitar fila">✕</button>`;
+    body.querySelector('.specs-rows').appendChild(row);
+  });
+
+  // Eliminar spec row (delegado)
+  body.querySelector('.specs-rows').addEventListener('click', e => {
+    if (e.target.classList.contains('btn-remove-spec')) {
+      e.target.closest('.spec-row').remove();
+    }
+  });
+
+  // Guardar
+  body.querySelector('.btn-save').addEventListener('click', () => saveLot(body, lot));
+}
+
+// ── Refrescar grid de fotos ───────────────────────────────────────────────────
+function refreshPhotosGrid(body, lot) {
+  const grid = body.querySelector('.photos-grid');
+  if (!lot.photos.length) {
+    grid.innerHTML = '<span class="no-photos">Sin fotos aún</span>';
+    return;
+  }
+  grid.innerHTML = lot.photos.map((url, i) => `
+    <div class="photo-thumb">
+      <img src="${url}" alt="Foto ${i+1}">
+      <button class="remove-photo" data-idx="${i}" title="Eliminar foto">×</button>
+    </div>`).join('');
+}
+
+// ── Guardar lote ──────────────────────────────────────────────────────────────
+async function saveLot(body, lot) {
+  const btn = body.querySelector('.btn-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Guardando…';
+
+  // Recolectar specs
+  const specs = [];
+  body.querySelectorAll('.spec-row').forEach(row => {
+    const k = row.querySelector('.spec-k').value.trim();
+    const v = row.querySelector('.spec-v').value.trim();
+    if (k) specs.push([k, v]);
+  });
+
+  const updates = {
+    badge:   body.querySelector('[data-field=badge]').value.trim(),
+    cat:     body.querySelector('[data-field=cat]').value.trim(),
+    title:   body.querySelector('[data-field=title]').value.trim(),
+    notice:  body.querySelector('[data-field=notice]').value.trim(),
+    btnText: body.querySelector('[data-field=btnText]').value.trim(),
+    pending: body.querySelector('[data-field=pending]').checked,
+    specs,
+  };
+
+  try {
+    const updated = await api('PUT', `/api/lots/${lot.id}`, updates);
+    Object.assign(lot, updated);
+    // Actualizar header de la card
+    const card = body.closest('.lot-card');
+    card.querySelector('.lot-badge-tag').textContent = lot.badge;
+    card.querySelector('.lot-badge-tag').className = 'lot-badge-tag' + (lot.pending ? ' pending' : '');
+    card.querySelector('.lot-card-title').textContent = lot.title;
+    card.querySelector('.lot-card-cat').textContent = lot.cat;
+    toast('Lote guardado correctamente');
+  } catch(err) {
+    toast(err.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Guardar cambios';
+  }
+}
+
+// ── Confirmar eliminación ─────────────────────────────────────────────────────
+async function confirmDeleteLot(id, badge) {
+  if (!confirm(`¿Seguro que querés eliminar "${badge}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    await api('DELETE', `/api/lots/${id}`);
+    lots = lots.filter(l => l.id !== id);
+    renderLots();
+    toast('Lote eliminado');
+  } catch(err) { toast(err.message, true); }
+}
+
+// ── Nuevo lote ────────────────────────────────────────────────────────────────
+document.getElementById('btn-new-lot').addEventListener('click', async () => {
+  const n = lots.length + 1;
+  try {
+    const lot = await api('POST', '/api/lots', {
+      badge:   `Lote ${n}`,
+      cat:     'Cabaña Lago Negro',
+      title:   'Nuevo lote',
+      specs:   [['Raza', 'Aberdeen Angus']],
+      notice:  '',
+      btnText: 'Consultar este lote →',
+      photos:  [],
+      pending: false,
+    });
+    lots.push(lot);
+    renderLots();
+    // Abrir la card nueva automáticamente
+    const newCard = document.querySelector(`[data-id="${lot.id}"] .lot-card-body`);
+    if (newCard) {
+      newCard.classList.add('open');
+      const toggleBtn = document.querySelector(`[data-id="${lot.id}"] [data-action=toggle]`);
+      if (toggleBtn) toggleBtn.textContent = '▴';
+      newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    toast('Lote creado. Completá los datos y guardá.');
+  } catch(err) { toast(err.message, true); }
+});
+
+// ── Auto-login si ya hay token ────────────────────────────────────────────────
+(async () => {
+  if (token) {
+    try {
+      const me = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+      if (me.ok) {
+        const data = await me.json();
+        enterApp(data.username);
+        return;
+      }
+    } catch { /* ignorar */ }
+    // Token inválido
+    localStorage.removeItem('admin_token');
+    token = '';
+  }
+})();
+</script>
+</body>
+</html>
