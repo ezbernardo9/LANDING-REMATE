@@ -540,6 +540,46 @@
     }
     .carousel-dot.active { background: var(--verde); transform: scale(1.4); }
 
+    /* ─── LOT GALLERY ─── */
+    .lote-media { position: relative; }
+    .gallery-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 0.5s ease-in-out;
+    }
+    .gallery-img.active { opacity: 1; }
+    .gallery-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 3; background: rgba(6,70,34,0.58); color: #F2E6CC;
+      border: none; cursor: pointer; width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-family: serif;
+      transition: background 0.2s; backdrop-filter: blur(4px);
+    }
+    .gallery-btn:hover { background: rgba(6,70,34,0.9); }
+    .gallery-prev { left: 10px; }
+    .gallery-next { right: 10px; }
+    .gallery-dots {
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 3;
+    }
+    .gdot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .gdot.active { background: #fff; transform: scale(1.35); }
+
+    /* ─── MAP ─── */
+    .lugar-map-container { position: relative; }
+    .lugar-map-container iframe { display: block; width: 100%; border: 0; aspect-ratio: 1/1; border-radius: 28px; }
+    .lugar-open-maps {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--acento); text-decoration: none; transition: color 0.2s;
+    }
+    .lugar-open-maps:hover { color: var(--verde-3); }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
       .contacto-cards { flex-direction: column; align-items: center; }
@@ -700,77 +740,11 @@
     <div class="lotes-carousel reveal">
       <div class="carousel-wrapper">
         <div class="carousel-track" id="carouselTrack">
-
-          <!-- Lote 1 -->
-          <div class="lote">
-            <div class="lote-media">
-              <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85" alt="Toro Angus PO">
-              <span class="lote-badge">Lote 1</span>
-            </div>
-            <div class="lote-body">
-              <div class="lote-cat">Toros · Cabaña Lago Negro</div>
-              <div class="lote-title">Toros Aberdeen Angus PO</div>
-              <div class="lote-specs">
-                <div class="lote-spec"><span class="lote-spec-k">Raza</span><span class="lote-spec-v">Aberdeen Angus PO</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Categoría</span><span class="lote-spec-v">Toros jóvenes</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Origen</span><span class="lote-spec-v">Cabaña Lago Negro · Rawson</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Sanidad</span><span class="lote-spec-v">Completa · SENASA</span></div>
-              </div>
-              <div class="lote-notice">📸 Fotos individuales disponibles en julio 2026</div>
-              <a href="https://wa.me/9542352501068?text=Quiero%20m%C3%A1s%20informaci%C3%B3n" class="lote-btn" target="_blank">Consultar este lote →</a>
-            </div>
-          </div>
-
-          <!-- Lote 2 -->
-          <div class="lote">
-            <div class="lote-media">
-              <img src="https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=900&q=85" alt="Vaquillonas Angus PC">
-              <span class="lote-badge">Lote 2</span>
-            </div>
-            <div class="lote-body">
-              <div class="lote-cat">Vaquillonas · Cabaña Lago Negro</div>
-              <div class="lote-title">Vaquillonas Aberdeen Angus PC</div>
-              <div class="lote-specs">
-                <div class="lote-spec"><span class="lote-spec-k">Raza</span><span class="lote-spec-v">Aberdeen Angus PC</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Categoría</span><span class="lote-spec-v">Vaquillonas entraderas</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Origen</span><span class="lote-spec-v">Cabaña Lago Negro · Rawson</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Sanidad</span><span class="lote-spec-v">Brucelosis · Completa</span></div>
-              </div>
-              <div class="lote-notice">📸 Fotos individuales disponibles en julio 2026</div>
-              <a href="https://wa.me/9542352501068?text=Quiero%20m%C3%A1s%20informaci%C3%B3n" class="lote-btn" target="_blank">Consultar este lote →</a>
-            </div>
-          </div>
-
-          <!-- Lote 3+ -->
-          <div class="lote">
-            <div class="lote-media">
-              <div class="lote-pending-cover">
-                <span class="diamond-ico">✦</span>
-                <span class="coming-label">Más lotes en camino</span>
-                <span class="lote-badge">Lote 3+</span>
-              </div>
-            </div>
-            <div class="lote-body">
-              <div class="lote-cat">Próximamente · Julio 2026</div>
-              <div class="lote-title">Más categorías por confirmar</div>
-              <div class="lote-specs">
-                <div class="lote-spec"><span class="lote-spec-k">Total estimado</span><span class="lote-spec-v">50 a 100 cabezas</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Razas</span><span class="lote-spec-v">Aberdeen Angus PO y PC</span></div>
-                <div class="lote-spec"><span class="lote-spec-k">Catálogo completo</span><span class="lote-spec-v">Julio 2026</span></div>
-              </div>
-              <div class="lote-notice">🔔 Más animales se agregan en julio</div>
-              <a href="https://wa.me/9542352501068?text=Quiero%20m%C3%A1s%20informaci%C3%B3n" class="lote-btn" target="_blank">Consultar →</a>
-            </div>
-          </div>
-
         </div>
       </div>
       <div class="carousel-nav">
         <button class="carousel-btn" id="carouselPrev" aria-label="Anterior">←</button>
         <div class="carousel-dots" id="carouselDots">
-          <button class="carousel-dot active" aria-label="Lote 1"></button>
-          <button class="carousel-dot" aria-label="Lote 2"></button>
-          <button class="carousel-dot" aria-label="Lote 3+"></button>
         </div>
         <button class="carousel-btn" id="carouselNext" aria-label="Siguiente">→</button>
       </div>
@@ -829,15 +803,17 @@
           </div>
         </div>
       </div>
-      <a href="https://maps.google.com/?q=Sociedad+Rural+de+Chacabuco+Buenos+Aires" target="_blank" class="lugar-map reveal-scale">
-        <div class="lugar-map-frame"></div>
-        <div class="lugar-map-content">
-          <span class="lugar-map-pin">📍</span>
-          <div class="lugar-map-cta">Ver en Google Maps</div>
-          <div class="lugar-map-address">Sociedad Rural · Chacabuco, Bs. As.</div>
-        </div>
-      </a>
-    </div>
+      <div class="lugar-map-container reveal-scale">
+        <iframe
+          src="https://www.google.com/maps?q=Sal%C3%B3n+Sociedad+Rural+de+Chacabuco%2C+Calle+179%2C+B6740+Chacabuco%2C+Provincia+de+Buenos+Aires%2C+Argentina&output=embed&z=16"
+          title="Ubicación del evento"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <a href="https://www.google.com/maps/search/Sal%C3%B3n+Sociedad+Rural+de+Chacabuco%2C+Calle+179%2C+B6740+Chacabuco%2C+Buenos+Aires" target="_blank" class="lugar-open-maps">
+          Ver en Google Maps ↗
+        </a>
+      </div></div>
   </div>
 </section>
  
@@ -891,13 +867,13 @@
     const max = document.documentElement.scrollHeight - innerHeight;
     prog.style.transform = `scaleX(${scrollY / max})`;
   }, { passive: true });
- 
+
   // ─── Nav scroll state ───
   const nav = document.getElementById('mainNav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', scrollY > 60);
   }, { passive: true });
- 
+
   // ─── Mobile menu ───
   const ham = document.getElementById('navHam');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -913,7 +889,7 @@
       mobileMenu.style.display = 'none';
     });
   });
- 
+
   // ─── Smooth anchor scroll ───
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -921,7 +897,7 @@
       if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
- 
+
   // ─── Scroll reveal ───
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
   const io = new IntersectionObserver((entries) => {
@@ -933,7 +909,7 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => io.observe(el));
- 
+
   // ─── Counter animation ───
   function animateCounter(el, target, suffix = '', duration = 1800) {
     let start = null;
@@ -950,36 +926,25 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const el = entry.target;
-        const val = parseInt(el.dataset.val);
-        const suffix = el.dataset.suffix || '';
-        animateCounter(el, val, suffix);
+        animateCounter(el, parseInt(el.dataset.val), el.dataset.suffix || '');
         counterObserver.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('[data-val]').forEach(el => counterObserver.observe(el));
- 
+
   // ─── Countdown timer ───
   function updateCountdown() {
-    // Fecha objetivo: 5 de agosto 2026
     const target = new Date('2026-08-05T10:00:00-03:00');
-    const now = new Date();
-    const diff = target - now;
+    const diff = target - new Date();
     if (diff <= 0) {
-      document.getElementById('cd-d').textContent = '00';
-      document.getElementById('cd-h').textContent = '00';
-      document.getElementById('cd-m').textContent = '00';
-      document.getElementById('cd-s').textContent = '00';
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00');
       return;
     }
-    const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    document.getElementById('cd-d').textContent = String(days).padStart(2, '0');
-    document.getElementById('cd-h').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cd-m').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('cd-s').textContent = String(seconds).padStart(2, '0');
+    document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(Math.floor(diff % 3600000 / 60000)).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(Math.floor(diff % 60000 / 1000)).padStart(2,'0');
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -999,10 +964,165 @@
     }, 4000);
   })();
 
-  // ─── Carousel ───
-  (function () {
+  // ════════════════════════════════════════════════════════════════════════════
+  // CATÁLOGO DE LOTES
+  // ─ Para agregar un lote: copiá un objeto del array, editá sus propiedades y
+  //   agregá las URLs de fotos reales en el array "photos".
+  // ─ Para agregar fotos a un lote: sumá URLs al array "photos" de ese lote.
+  // ════════════════════════════════════════════════════════════════════════════
+  const LOTS = [
+    {
+      badge: 'Lote 1',
+      cat: 'Toros · Cabaña Lago Negro',
+      title: 'Toros Aberdeen Angus PO',
+      specs: [
+        ['Raza',      'Aberdeen Angus PO'],
+        ['Categoría', 'Toros jóvenes'],
+        ['Origen',    'Cabaña Lago Negro · Rawson'],
+        ['Sanidad',   'Completa · SENASA'],
+      ],
+      notice: '📸 Fotos individuales disponibles en julio 2026',
+      btnText: 'Consultar este lote →',
+      photos: [
+        'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85',
+        'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=900&q=85',
+        'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85',
+      ],
+    },
+    {
+      badge: 'Lote 2',
+      cat: 'Vaquillonas · Cabaña Lago Negro',
+      title: 'Vaquillonas Aberdeen Angus PC',
+      specs: [
+        ['Raza',      'Aberdeen Angus PC'],
+        ['Categoría', 'Vaquillonas entraderas'],
+        ['Origen',    'Cabaña Lago Negro · Rawson'],
+        ['Sanidad',   'Brucelosis · Completa'],
+      ],
+      notice: '📸 Fotos individuales disponibles en julio 2026',
+      btnText: 'Consultar este lote →',
+      photos: [
+        'https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=900&q=85',
+        'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=900&q=85',
+        'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=900&q=85&fit=crop&crop=right',
+      ],
+    },
+    {
+      badge: 'Lote 3+',
+      cat: 'Próximamente · Julio 2026',
+      title: 'Más categorías por confirmar',
+      specs: [
+        ['Total estimado',   '50 a 100 cabezas'],
+        ['Razas',            'Aberdeen Angus PO y PC'],
+        ['Catálogo completo','Julio 2026'],
+      ],
+      notice: '🔔 Más animales se agregan en julio',
+      btnText: 'Consultar →',
+      pending: true,
+    },
+    // ── Agregar lotes aquí ──────────────────────────────────────────────────
+    // {
+    //   badge: 'Lote 4',
+    //   cat: 'Categoría · Cabaña',
+    //   title: 'Nombre del lote',
+    //   specs: [['Clave','Valor']],
+    //   notice: '📸 Fotos disponibles en julio',
+    //   btnText: 'Consultar este lote →',
+    //   photos: ['URL_FOTO_1', 'URL_FOTO_2'],
+    // },
+  ];
+
+  // ─── Inicializar galería interna de cada lote ───
+  function initLotGallery(slide) {
+    const imgs  = slide.querySelectorAll('.gallery-img');
+    const gdots = slide.querySelectorAll('.gdot');
+    if (imgs.length < 2) return;
+    let gidx = 0;
+
+    function goGallery(n) {
+      imgs[gidx].classList.remove('active');
+      gdots[gidx].classList.remove('active');
+      gidx = ((n % imgs.length) + imgs.length) % imgs.length;
+      imgs[gidx].classList.add('active');
+      gdots[gidx].classList.add('active');
+    }
+
+    slide.querySelector('.gallery-prev')?.addEventListener('click', e => { e.stopPropagation(); goGallery(gidx - 1); });
+    slide.querySelector('.gallery-next')?.addEventListener('click', e => { e.stopPropagation(); goGallery(gidx + 1); });
+
+    // Swipe en la zona de la imagen
+    const media = slide.querySelector('.lote-media');
+    let gsx = 0;
+    media.addEventListener('touchstart', e => { gsx = e.touches[0].clientX; }, { passive: true });
+    media.addEventListener('touchend', e => {
+      const dx = gsx - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 40) { e.stopPropagation(); goGallery(dx > 0 ? gidx + 1 : gidx - 1); }
+    }, { passive: true });
+  }
+
+  // ─── Construir carrusel desde LOTS ───
+  function buildCarousel() {
     const track = document.getElementById('carouselTrack');
-    if (!track) return;
+    const dotsC = document.getElementById('carouselDots');
+    if (!track || !dotsC) return;
+    track.innerHTML = '';
+    dotsC.innerHTML = '';
+
+    LOTS.forEach((lot, idx) => {
+      let mediaHTML;
+      if (lot.pending) {
+        mediaHTML = `
+          <div class="lote-media">
+            <div class="lote-pending-cover">
+              <span class="diamond-ico">✦</span>
+              <span class="coming-label">Más lotes en camino</span>
+              <span class="lote-badge">${lot.badge}</span>
+            </div>
+          </div>`;
+      } else {
+        const imgs  = lot.photos.map((u, i) => `<img class="gallery-img${i===0?' active':''}" src="${u}" alt="${lot.title}" loading="lazy">`).join('');
+        const gdots = lot.photos.map((_,i) => `<span class="gdot${i===0?' active':''}"></span>`).join('');
+        const nav   = lot.photos.length > 1 ? `
+          <button class="gallery-btn gallery-prev" aria-label="Foto anterior">‹</button>
+          <button class="gallery-btn gallery-next" aria-label="Foto siguiente">›</button>
+          <div class="gallery-dots">${gdots}</div>` : '';
+        mediaHTML = `
+          <div class="lote-media">
+            ${imgs}
+            <span class="lote-badge">${lot.badge}</span>
+            ${nav}
+          </div>`;
+      }
+
+      const specsHTML = lot.specs.map(([k,v]) =>
+        `<div class="lote-spec"><span class="lote-spec-k">${k}</span><span class="lote-spec-v">${v}</span></div>`
+      ).join('');
+
+      const slide = document.createElement('div');
+      slide.className = 'lote';
+      slide.innerHTML = `${mediaHTML}
+        <div class="lote-body">
+          <div class="lote-cat">${lot.cat}</div>
+          <div class="lote-title">${lot.title}</div>
+          <div class="lote-specs">${specsHTML}</div>
+          <div class="lote-notice">${lot.notice}</div>
+          <a href="https://wa.me/9542352501068?text=Quiero%20m%C3%A1s%20informaci%C3%B3n" class="lote-btn" target="_blank">${lot.btnText}</a>
+        </div>`;
+      track.appendChild(slide);
+      if (!lot.pending) initLotGallery(slide);
+
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', lot.badge);
+      dotsC.appendChild(dot);
+    });
+
+    initCarousel();
+  }
+
+  // ─── Carrusel principal ───
+  function initCarousel() {
+    const track = document.getElementById('carouselTrack');
     const dots  = document.querySelectorAll('.carousel-dot');
     const total = track.children.length;
     let current = 0;
@@ -1017,14 +1137,17 @@
     document.getElementById('carouselNext').addEventListener('click', () => goTo(current + 1));
     dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
 
-    // Swipe / touch support
-    let startX = 0;
-    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend',   e => {
-      const dx = startX - e.changedTouches[0].clientX;
-      if (Math.abs(dx) > 40) goTo(dx > 0 ? current + 1 : current - 1);
+    // Swipe en la zona de texto del lote (no en la galería)
+    let csx = 0;
+    track.addEventListener('touchstart', e => { csx = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      if (e.target.closest('.lote-media')) return;
+      const dx = csx - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 50) goTo(dx > 0 ? current + 1 : current - 1);
     }, { passive: true });
-  })();
+  }
+
+  buildCarousel();
 </script>
 </body>
 </html>
