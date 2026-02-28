@@ -365,6 +365,31 @@
     .lotes-note-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
     .lotes-note-text { font-family: 'Source Serif 4', serif; font-size: 15px; font-style: italic; color: var(--gris); line-height: 1.7; }
  
+    /* ─── SLIDER DE FOTOS ─── */
+    .lote-slider { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    .lote-slides { display: flex; height: 100%; transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; user-select: none; }
+    .lote-slide { flex: 0 0 100%; min-width: 0; height: 100%; }
+    .lote-slide img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; transition: transform 0.6s var(--ease-out); }
+    .lote:hover .lote-slide img { transform: scale(1.06); }
+    .slider-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(5,21,7,0.52); backdrop-filter: blur(6px);
+      border: 1px solid rgba(201,168,76,0.4); color: var(--dorado);
+      font-size: 22px; cursor: pointer; z-index: 4;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s, background 0.2s; padding: 0; line-height: 1;
+    }
+    .lote:hover .slider-btn { opacity: 1; }
+    .slider-btn:hover { background: rgba(5,21,7,0.88); }
+    .slider-prev { left: 10px; }
+    .slider-next { right: 10px; }
+    .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 4; }
+    .slider-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s, transform 0.2s; border: none; padding: 0; outline: none; }
+    .slider-dot.active { background: #fff; transform: scale(1.4); }
+    .slider-counter { position: absolute; bottom: 10px; right: 12px; z-index: 4; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.32); padding: 3px 9px; border-radius: 20px; pointer-events: none; }
+    @media (max-width: 900px) { .slider-btn { opacity: 0.85; width: 32px; height: 32px; font-size: 18px; } }
+
     /* ─── TIMELINE ─── */
     .timeline-section { background: var(--crema-2); }
     .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 56px; position: relative; }
@@ -654,70 +679,8 @@
       </div>
       <a href="https://wa.me/54911XXXXXXXX?text=Hola!%20Quiero%20el%20cat%C3%A1logo%20completo%20del%20remate%20Madelan%20Chacabuco" class="btn-primary reveal" target="_blank">Pedir catálogo completo</a>
     </div>
-    <div class="lotes-grid">
- 
-      <!-- Lote 1 -->
-      <div class="lote reveal">
-        <div class="lote-media">
-          <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=700&q=80" alt="Toro Angus PO">
-          <span class="lote-badge">Lote 1</span>
-        </div>
-        <div class="lote-body">
-          <div class="lote-cat">Toros · Cabaña Lago Negro</div>
-          <div class="lote-title">Toros Aberdeen Angus PO</div>
-          <div class="lote-specs">
-            <div class="lote-spec"><span class="lote-spec-k">Raza</span><span class="lote-spec-v">Aberdeen Angus PO</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Categoría</span><span class="lote-spec-v">Toros jóvenes</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Origen</span><span class="lote-spec-v">Cabaña Lago Negro · Rawson</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Sanidad</span><span class="lote-spec-v">Completa · SENASA</span></div>
-          </div>
-          <div class="lote-notice">📸 Fotos individuales disponibles en julio</div>
-          <a href="https://wa.me/54911XXXXXXXX?text=Hola!%20Consulto%20por%20el%20Lote%201%20-%20Toros%20Angus%20PO" class="lote-btn" target="_blank">Consultar este lote →</a>
-        </div>
-      </div>
- 
-      <!-- Lote 2 -->
-      <div class="lote reveal">
-        <div class="lote-media">
-          <img src="https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=700&q=80" alt="Vaquillonas Angus PC">
-          <span class="lote-badge">Lote 2</span>
-        </div>
-        <div class="lote-body">
-          <div class="lote-cat">Vaquillonas · Cabaña Lago Negro</div>
-          <div class="lote-title">Vaquillonas Aberdeen Angus PC</div>
-          <div class="lote-specs">
-            <div class="lote-spec"><span class="lote-spec-k">Raza</span><span class="lote-spec-v">Aberdeen Angus PC</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Categoría</span><span class="lote-spec-v">Vaquillonas entraderas</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Origen</span><span class="lote-spec-v">Cabaña Lago Negro · Rawson</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Sanidad</span><span class="lote-spec-v">Brucelosis · Completa</span></div>
-          </div>
-          <div class="lote-notice">📸 Fotos individuales disponibles en julio</div>
-          <a href="https://wa.me/54911XXXXXXXX?text=Hola!%20Consulto%20por%20el%20Lote%202%20-%20Vaquillonas%20Angus%20PC" class="lote-btn" target="_blank">Consultar este lote →</a>
-        </div>
-      </div>
- 
-      <!-- Lote 3+ -->
-      <div class="lote reveal">
-        <div class="lote-media">
-          <div class="lote-pending-cover">
-            <span class="diamond-ico">✦</span>
-            <span class="coming-label">Más lotes en camino</span>
-            <span class="lote-badge">Lote 3+</span>
-          </div>
-        </div>
-        <div class="lote-body">
-          <div class="lote-cat">Próximamente</div>
-          <div class="lote-title">Más categorías por confirmar</div>
-          <div class="lote-specs">
-            <div class="lote-spec"><span class="lote-spec-k">Total estimado</span><span class="lote-spec-v">50 a 100 cabezas</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Razas</span><span class="lote-spec-v">Aberdeen Angus PO y PC</span></div>
-            <div class="lote-spec"><span class="lote-spec-k">Catálogo completo</span><span class="lote-spec-v">Julio 2025</span></div>
-          </div>
-          <div class="lote-notice">🔔 Catálogo completo disponible en julio</div>
-          <a href="https://wa.me/54911XXXXXXXX?text=Hola!%20Avisame%20cuando%20est%C3%A9%20el%20cat%C3%A1logo%20del%20remate" class="lote-btn" target="_blank">Avisame cuando esté listo →</a>
-        </div>
-      </div>
- 
+    <div class="lotes-grid" id="lotesGrid">
+      <!-- Generado dinámicamente por JS — agregar lotes en el array lotesData -->
     </div>
     <div class="lotes-note reveal">
       <div class="lotes-note-icon">📋</div>
@@ -866,6 +829,151 @@
 </footer>
  
 <script>
+  // ─── Datos de lotes (agregar o editar aquí para escalar a 50+ lotes) ───
+  const WA = '54911XXXXXXXX';
+
+  const lotesData = [
+    {
+      numero: 1,
+      categoria: 'Toros · Cabaña Lago Negro',
+      titulo: 'Toros Aberdeen Angus PO',
+      fotos: [
+        { src: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=700&q=80', alt: 'Toro Angus PO — Vista 1' },
+        { src: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=700&q=80', alt: 'Toro Angus PO — Vista 2' },
+        { src: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=700&q=80', alt: 'Toro Angus PO — Vista 3' },
+      ],
+      specs: [
+        { k: 'Raza', v: 'Aberdeen Angus PO' },
+        { k: 'Categoría', v: 'Toros jóvenes' },
+        { k: 'Origen', v: 'Cabaña Lago Negro · Rawson' },
+        { k: 'Sanidad', v: 'Completa · SENASA' },
+      ],
+      notice: '📸 Fotos individuales disponibles en julio',
+      btnLabel: 'Consultar este lote →',
+      waMsg: 'Hola!%20Consulto%20por%20el%20Lote%201%20-%20Toros%20Angus%20PO',
+    },
+    {
+      numero: 2,
+      categoria: 'Vaquillonas · Cabaña Lago Negro',
+      titulo: 'Vaquillonas Aberdeen Angus PC',
+      fotos: [
+        { src: 'https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=700&q=80', alt: 'Vaquillonas Angus PC — Vista 1' },
+        { src: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=700&q=80', alt: 'Vaquillonas Angus PC — Vista 2' },
+      ],
+      specs: [
+        { k: 'Raza', v: 'Aberdeen Angus PC' },
+        { k: 'Categoría', v: 'Vaquillonas entraderas' },
+        { k: 'Origen', v: 'Cabaña Lago Negro · Rawson' },
+        { k: 'Sanidad', v: 'Brucelosis · Completa' },
+      ],
+      notice: '📸 Fotos individuales disponibles en julio',
+      btnLabel: 'Consultar este lote →',
+      waMsg: 'Hola!%20Consulto%20por%20el%20Lote%202%20-%20Vaquillonas%20Angus%20PC',
+    },
+    // Lote pendiente — siempre al final
+    { numero: '3+', pending: true },
+  ];
+
+  // ─── Render de lotes ───
+  function buildLoteHTML(lote) {
+    if (lote.pending) {
+      return `<div class="lote reveal">
+        <div class="lote-media">
+          <div class="lote-pending-cover">
+            <span class="diamond-ico">✦</span>
+            <span class="coming-label">Más lotes en camino</span>
+            <span class="lote-badge">Lote ${lote.numero}</span>
+          </div>
+        </div>
+        <div class="lote-body">
+          <div class="lote-cat">Próximamente</div>
+          <div class="lote-title">Más categorías por confirmar</div>
+          <div class="lote-specs">
+            <div class="lote-spec"><span class="lote-spec-k">Total estimado</span><span class="lote-spec-v">50 a 100 cabezas</span></div>
+            <div class="lote-spec"><span class="lote-spec-k">Razas</span><span class="lote-spec-v">Aberdeen Angus PO y PC</span></div>
+            <div class="lote-spec"><span class="lote-spec-k">Catálogo completo</span><span class="lote-spec-v">Julio 2025</span></div>
+          </div>
+          <div class="lote-notice">🔔 Catálogo completo disponible en julio</div>
+          <a href="https://wa.me/${WA}?text=Hola!%20Avisame%20cuando%20est%C3%A9%20el%20cat%C3%A1logo%20del%20remate" class="lote-btn" target="_blank">Avisame cuando esté listo →</a>
+        </div>
+      </div>`;
+    }
+
+    const n = lote.fotos.length;
+    const slides = lote.fotos.map((f, i) =>
+      `<div class="lote-slide"><img src="${f.src}" alt="${f.alt}" loading="${i === 0 ? 'eager' : 'lazy'}"></div>`
+    ).join('');
+    const dots = n > 1 ? lote.fotos.map((_, i) =>
+      `<button class="slider-dot${i === 0 ? ' active' : ''}" aria-label="Foto ${i + 1}"></button>`
+    ).join('') : '';
+    const controls = n > 1 ? `
+      <button class="slider-btn slider-prev" aria-label="Foto anterior">&#8249;</button>
+      <button class="slider-btn slider-next" aria-label="Foto siguiente">&#8250;</button>
+      <div class="slider-dots">${dots}</div>
+      <div class="slider-counter">1 / ${n}</div>` : '';
+    const specs = lote.specs.map(s =>
+      `<div class="lote-spec"><span class="lote-spec-k">${s.k}</span><span class="lote-spec-v">${s.v}</span></div>`
+    ).join('');
+
+    return `<div class="lote reveal">
+      <div class="lote-media">
+        <div class="lote-slider" data-count="${n}">
+          <div class="lote-slides">${slides}</div>
+          ${controls}
+        </div>
+        <span class="lote-badge">Lote ${lote.numero}</span>
+      </div>
+      <div class="lote-body">
+        <div class="lote-cat">${lote.categoria}</div>
+        <div class="lote-title">${lote.titulo}</div>
+        <div class="lote-specs">${specs}</div>
+        <div class="lote-notice">${lote.notice}</div>
+        <a href="https://wa.me/${WA}?text=${lote.waMsg}" class="lote-btn" target="_blank">${lote.btnLabel}</a>
+      </div>
+    </div>`;
+  }
+
+  const lotesGrid = document.getElementById('lotesGrid');
+  if (lotesGrid) lotesGrid.innerHTML = lotesData.map(buildLoteHTML).join('');
+
+  // ─── Sliders ───
+  document.querySelectorAll('.lote-slider').forEach(slider => {
+    const track = slider.querySelector('.lote-slides');
+    const n = parseInt(slider.dataset.count) || 1;
+    if (n <= 1) return;
+
+    const dots = slider.querySelectorAll('.slider-dot');
+    const counter = slider.querySelector('.slider-counter');
+    let cur = 0, x0 = 0, dragging = false;
+
+    function go(i) {
+      cur = ((i % n) + n) % n;
+      track.style.transform = `translateX(-${cur * 100}%)`;
+      dots.forEach((d, j) => d.classList.toggle('active', j === cur));
+      if (counter) counter.textContent = `${cur + 1} / ${n}`;
+    }
+
+    slider.querySelector('.slider-prev').addEventListener('click', e => { e.stopPropagation(); go(cur - 1); });
+    slider.querySelector('.slider-next').addEventListener('click', e => { e.stopPropagation(); go(cur + 1); });
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+
+    // Swipe táctil
+    track.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = x0 - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 40) go(cur + (dx > 0 ? 1 : -1));
+    }, { passive: true });
+
+    // Arrastre con mouse
+    track.addEventListener('mousedown', e => { x0 = e.clientX; dragging = true; });
+    window.addEventListener('mouseup', e => {
+      if (!dragging) return;
+      dragging = false;
+      const dx = x0 - e.clientX;
+      if (Math.abs(dx) > 40) go(cur + (dx > 0 ? 1 : -1));
+    });
+  });
+
   // ─── Scroll progress ───
   const prog = document.getElementById('scroll-progress');
   window.addEventListener('scroll', () => {
